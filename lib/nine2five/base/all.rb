@@ -1,0 +1,1 @@
+require 'nine2five/base/queue_channel'
