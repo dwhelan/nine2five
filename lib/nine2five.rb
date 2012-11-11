@@ -1,4 +1,4 @@
 require 'nine2five/processor'
-require 'nine2five/fifo_selector'
-require 'nine2five/stack_selector'
-require 'nine2five/node'
+
+# Slated for deletion
+require 'nine2five/xxx/all'

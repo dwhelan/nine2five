@@ -1,4 +1,5 @@
 module Nine2Five
+
   class Node
 
     def process(object=nil)
