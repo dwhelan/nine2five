@@ -3,16 +3,17 @@ module Nine2Five
     class FactoryChannel
 
       def initialize(output=nil, &block)
+        @initial = output
         @output = output
         @block = block
       end
 
-      #def << obj
-      #  @queue << obj
-      #end
+      def << obj
+        @output = obj
+      end
 
       def receive
-        @output = @block.call(@output) if @block
+        @output = @block.call(@output, @initial) if @block
         @output
       end
     end
