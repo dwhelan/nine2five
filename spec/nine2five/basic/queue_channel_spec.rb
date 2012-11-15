@@ -2,9 +2,11 @@ require "spec_helper"
 
 module Nine2Five
 
-  module Base
+  module Basic
 
     describe QueueChannel do
+
+      subject { QueueChannel.new('foo')}
       let(:job) { 'job' }
 
       it "should operate as FIFO" do
@@ -30,6 +32,9 @@ module Nine2Five
 
         runner.join
       end
+
+      its(:name) { should == 'foo' }
     end
+
   end
 end

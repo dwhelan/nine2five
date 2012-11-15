@@ -1,9 +1,12 @@
-module Nine2Five
-  module Base
-    class QueueChannel
+require 'nine2five/basic/base'
 
-      def initialize
+module Nine2Five
+  module Basic
+    class QueueChannel < Base
+
+      def initialize(name, opts={})
         @queue = Queue.new
+        super
       end
 
       def << obj

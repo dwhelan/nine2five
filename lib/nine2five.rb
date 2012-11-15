@@ -1,5 +1,3 @@
 require 'nine2five/processor'
-require 'nine2five/base/all'
-
-# Slated for deletion
-require 'nine2five/xxx/all'
+require 'nine2five/workflow_map'
+require 'nine2five/basic/all'

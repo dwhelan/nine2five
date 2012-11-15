@@ -28,7 +28,7 @@ module Nine2Five
         output.should_receive(:<<).with('foo')
         subject.start
       end
-
     end
+
   end
 end
