@@ -6,7 +6,7 @@ module Nine2Five
 
     describe QueueChannel do
 
-      subject { QueueChannel.new('foo')}
+      subject { QueueChannel.new }
       let(:job) { 'job' }
 
       it "should operate as FIFO" do
@@ -33,6 +33,7 @@ module Nine2Five
         runner.join
       end
 
+      subject { QueueChannel.new(name: 'foo') }
       its(:name) { should == 'foo' }
     end
 

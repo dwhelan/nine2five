@@ -8,8 +8,9 @@ module Nine2Five
 
       attr_reader :name
 
-      def initialize(name, opts)
-        @name = name
+      def initialize(opts, &block)
+        @name = opts[:name]
+        @block = block
       end
 
     end

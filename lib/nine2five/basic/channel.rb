@@ -2,11 +2,10 @@ module Nine2Five
   module Basic
     class Channel < Base
 
-      def initialize(name, value=nil, opts={}, &block)
-        @initial = value
-        @value = value
-        @block = block
-        super(name, opts)
+      def initialize(opts={}, &block)
+        @initial = opts[:value]
+        @value = @initial
+        super
       end
 
       def << obj
