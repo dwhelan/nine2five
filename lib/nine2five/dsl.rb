@@ -8,7 +8,12 @@ end
 def processor(opts={})
   opts.each do |k,v|
     case k
-      when :in, :out then v = Nine2Five::WorkflowMap.instance.channels[v]
+      when :in, :out
+        if v.kind_of?(Array)
+          v = v.map{|name| Nine2Five::WorkflowMap.instance.channels[name]}
+        else
+          v = Nine2Five::WorkflowMap.instance.channels[v]
+        end
     end
     opts[k] = v
   end

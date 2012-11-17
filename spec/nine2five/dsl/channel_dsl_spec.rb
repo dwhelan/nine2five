@@ -4,7 +4,7 @@ module Nine2Five
 
   describe "Channel DSL" do
 
-    before { WorkflowMap.instance.reset }
+    before { initialize_workflow_map }
     subject { eval(parent_description(self)) }
 
     describe "channel name: :c, in: 42" do

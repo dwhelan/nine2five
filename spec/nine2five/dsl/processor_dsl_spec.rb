@@ -4,7 +4,7 @@ module Nine2Five
 
   describe "Processor DSL" do
 
-    before  { WorkflowMap.instance.reset }
+    before  { initialize_workflow_map }
     subject { eval(parent_description(self)) }
 
     describe "processor name: :p" do
@@ -17,14 +17,8 @@ module Nine2Five
       its(:out) { subject.should be channels[:c] }
     end
 
-    it "1 + 2 should equal 3" do
-      pending "Adder"
-      eval(%Q[
-        channel   name: :a, value: 1
-        channel   name: :b, value: 2
-        processor name: :+, :a, :b, :c
-      ])
-
+    describe "channel name: :a; channel name: :b; channel name: :c; processor in: [:a, :b]" do
+      its(:in) { should == [ channels[:a], channels[:b] ] }
     end
 
     it "should save the processor hashed by its name" do
