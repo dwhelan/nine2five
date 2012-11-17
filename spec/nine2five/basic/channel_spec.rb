@@ -8,27 +8,27 @@ module Nine2Five
 
       let(:value) { 'foo'}
 
-      describe 'without a block' do
+      describe "without a block" do
 
-        it "receive should return value passed to initialize" do
-          factory = Channel.new(value: value)
-          factory.receive.should be value
+        context "with an initial value of 42" do
+          subject {Channel.new(value: 42) }
+          its(:receive) { should be 42 }
         end
 
-        it "receive should default to creating nils" do
-          factory = Channel.new
-          factory.receive.should be nil
+        context "with no initial value" do
+          subject {Channel.new }
+          its(:receive) { should be nil }
         end
       end
 
-      describe 'with a block' do
+      describe "with a block" do
 
-        it "receive should pass initial value on first call to block" do
-          factory = Channel.new(value: value) { |x| x }
-          factory.receive.should be value
+        describe "with an initial value of 42 and an identity block" do
+          subject { Channel.new(value: 42) { |x| x } }
+          its(:receive) { should be 42 }
         end
 
-        it "receive should pass the last received value to block" do
+        it "with a block that increments, each receive call should return a value one greater than the last" do
           factory = Channel.new(value: 0) { |x| x + 1 }
           factory.receive.should be 1
           factory.receive.should be 2
