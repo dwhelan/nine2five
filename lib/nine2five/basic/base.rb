@@ -6,7 +6,7 @@ module Nine2Five
 
     class Base
 
-      attr_reader :name
+      attr_reader :name, :block
 
       def initialize(opts, &block)
         @name = opts[:name]

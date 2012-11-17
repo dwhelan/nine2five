@@ -8,29 +8,43 @@ module Nine2Five
       let(:output) { Object.new }
       let(:runner) { Object.new }
 
-      before do
-        input.should_receive(:receive).and_return('foo')
-        runner.should_receive(:run).and_yield()
+      describe "attributes" do
+        let(:block)  { Proc.new { |x| x + 'bar' } }
+
+        subject { Processor.new({name: :p, in: input, out: output, runner: runner}, &block)  }
+
+        its(:name)   { should be :p}
+        its(:in)     { should be input}
+        its(:out)    { should be output}
+        its(:runner) { should be runner}
+        its(:block)  { should be block}
       end
 
-      context "with a block" do
-        subject { Processor.new(in: input, out: output, runner: runner) { |x| x + 'bar'} }
+      context "running" do
 
-        it "should process input through a block and output" do
-          output.should_receive(:<<).with('foobar')
-          subject.start
+        before do
+          runner.should_receive(:run).and_yield()
+          input.should_receive(:receive).and_return('foo')
+        end
+
+        context "with a block" do
+          subject { Processor.new(in: input, out: output, runner: runner) { |x| x + 'bar' }  }
+
+          it "should process input through the block" do
+            output.should_receive(:<<).with('foobar')
+            subject.start
+          end
+        end
+
+        context "without a block" do
+          subject { Processor.new(in: input, out: output, runner: runner)   }
+
+          it "should pass input straight through to output" do
+            output.should_receive(:<<).with('foo')
+            subject.start
+          end
         end
       end
-
-      context "without a block" do
-        subject { Processor.new(in: input, out: output, runner: runner)   }
-
-        it "should pass input straight through to output if no block is provided" do
-          output.should_receive(:<<).with('foo')
-          subject.start
-        end
-      end
-
     end
   end
 end

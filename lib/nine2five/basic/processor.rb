@@ -4,18 +4,20 @@ module Nine2Five
   module Basic
     class Processor < Base
 
+      attr_reader :in, :out, :runner
+
       def initialize(opts={}, &block)
-        @input  = opts[:in]
-        @output = opts[:out]
+        @in  = opts[:in]
+        @out = opts[:out]
         @runner = opts[:runner]
         super
       end
 
       def start
         @runner.run do
-          input = @input.receive
+          input = @in.receive
           output = @block ? @block.call(input) : input
-          @output << output
+          @out << output
         end
       end
     end
