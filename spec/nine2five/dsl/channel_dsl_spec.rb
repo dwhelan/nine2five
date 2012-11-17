@@ -4,28 +4,24 @@ module Nine2Five
 
   describe "Channel DSL" do
 
-    describe "basic channel" do
+    before { WorkflowMap.instance.reset }
+    subject { eval(parent_description(self)) }
 
-      describe "should create channel with name" do
-
-        subject { eval('channel name: :a') }
-
-        its(:name)    { should be :a }
-        its(:class)   { should be Basic::Channel }
-        its(:receive) { should be nil }
-      end
-
-      describe "should create a constant value channel" do
-        subject { eval('channel name: :a, value: 42') }
-
-        its(:receive) { should be 42 }
-      end
-
-      describe "should return last channel created" do
-        subject { eval('channel name: :a, value: 1;channel name: :b, value: 2') }
-
-        its(:receive) { should be 2 }
-      end
+    describe "channel name: :c, value: 42" do
+      its(:name)    { should be :c }
+      its(:class)   { should be Basic::Channel }
+      its(:receive) { should be 42 }
     end
+
+    describe "channel name: :one; channel name: :two" do
+      its(:name)    { should be :two }
+    end
+
+    it "should save the channel hashed by its name" do
+      c = eval("channel name: :c")
+      channels[:c].should be c
+      channels.count.should be 1
+    end
+
   end
 end

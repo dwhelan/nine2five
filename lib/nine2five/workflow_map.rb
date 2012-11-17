@@ -4,18 +4,22 @@ module Nine2Five
 
   class WorkflowMap
 
-    attr_reader :channels
-
     include Singleton
 
+    attr_reader :channels, :processors
+
     def initialize
-      @channels = []
+      reset
     end
 
     def add_channel channel
-      channels << channel
+      channels[channel.name] = channel
       channel
     end
 
+    def reset
+      @channels = {}
+      @processors = {}
+    end
   end
 end

@@ -1,5 +1,7 @@
 require 'nine2five'
 
+Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
+
 RSpec.configure do |c|
   c.color_enabled = true
   c.filter_run :focus => true

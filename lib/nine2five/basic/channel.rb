@@ -16,6 +16,10 @@ module Nine2Five
         @value = @block.call(@value, @initial) if @block
         @value
       end
+
+      def inspect
+        "Channel :#{@name}"
+      end
     end
   end
 end
