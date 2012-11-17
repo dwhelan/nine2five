@@ -19,7 +19,7 @@ module Nine2Five
       describe "without a block" do
 
         context "with an initial value of 42" do
-          subject {Channel.new(value: 42) }
+          subject {Channel.new(in: 42) }
           its(:receive) { should be 42 }
         end
 
@@ -32,19 +32,19 @@ module Nine2Five
       describe "with a block" do
 
         describe "with an initial value of 42 and an identity block" do
-          subject { Channel.new(value: 42) { |x| x } }
+          subject { Channel.new(in: 42) { |x| x } }
           its(:receive) { should be 42 }
         end
 
         it "with a block that increments, each receive call should return a value one greater than the last" do
-          factory = Channel.new(value: 0) { |x| x + 1 }
+          factory = Channel.new(in: 0) { |x| x + 1 }
           factory.receive.should be 1
           factory.receive.should be 2
           factory.receive.should be 3
         end
 
         it "receive should pass initial value to block as second parameter" do
-          factory = Channel.new(value: 1) { |x, initial| x + initial + 1 }
+          factory = Channel.new(in: 1) { |x, initial| x + initial + 1 }
           factory.receive.should be 3
           factory.receive.should be 5
           factory.receive.should be 7

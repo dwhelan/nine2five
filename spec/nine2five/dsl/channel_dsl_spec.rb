@@ -7,7 +7,7 @@ module Nine2Five
     before { WorkflowMap.instance.reset }
     subject { eval(parent_description(self)) }
 
-    describe "channel name: :c, value: 42" do
+    describe "channel name: :c, in: 42" do
       its(:name)    { should be :c }
       its(:class)   { should be Basic::Channel }
       its(:receive) { should be 42 }

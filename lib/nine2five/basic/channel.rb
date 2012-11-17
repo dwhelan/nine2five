@@ -3,7 +3,7 @@ module Nine2Five
     class Channel < Base
 
       def initialize(opts={}, &block)
-        @initial = opts[:value]
+        @initial = opts[:in]
         @value = @initial
         super
       end
