@@ -1,7 +1,9 @@
 require "spec_helper"
 
 module Nine2Five
+
   module Basic
+
     describe Processor do
 
       let(:input)  { Object.new }
@@ -9,7 +11,7 @@ module Nine2Five
       let(:runner) { Object.new }
 
       describe "attributes" do
-        let(:block)  { Proc.new { |x| x + 'bar' } }
+        let(:block)  { Proc.new { } }
 
         subject { Processor.new({name: :p, in: input, out: output, runner: runner}, &block)  }
 

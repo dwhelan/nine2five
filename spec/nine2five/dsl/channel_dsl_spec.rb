@@ -21,12 +21,6 @@ module Nine2Five
         its(:receive) { should be 42 }
       end
 
-      describe "should create a constant value channel" do
-        subject { eval('channel name: :a, value: 42') }
-
-        its(:receive) { should be 42 }
-      end
-
       describe "should return last channel created" do
         subject { eval('channel name: :a, value: 1;channel name: :b, value: 2') }
 
