@@ -16,10 +16,16 @@ module Nine2Five
         its(:block) { should be block}
       end
 
-      describe "with name as single argument" do
+      describe "with name as first argument" do
         subject { Channel.new :c }
 
-        its(:name)  { should be :c}
+        its(:name) { should be :c}
+      end
+
+      describe "with value as second argument" do
+        subject { Channel.new :c, 1 }
+
+        its(:receive) { should be 1}
       end
 
       describe "without a block" do

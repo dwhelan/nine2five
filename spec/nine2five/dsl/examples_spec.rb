@@ -8,18 +8,14 @@ module Nine2Five
     subject { eval(parent_description(self)) }
 
     it "should allow a simple adder" do
-      eval("
-        c :a, in: 1
-        c :b, in: 2
+      adder = eval("
+        c :a, 1
+        c :b, 2
         c :c
-        p(:adder, in: [:a, :b], out: :c) {|x| x.inject(:+)}"
+        p(in: [:a, :b], out: :c) {|x| x.inject(:+)}"
       )
 
-      adder = processors[:adder]
-      result = channels[:c]
-      result.should_receive(:<<).with(3)
-
-      adder.run
+      adder.run.should be 3
     end
   end
 end
