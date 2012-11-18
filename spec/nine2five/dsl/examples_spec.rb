@@ -5,7 +5,7 @@ module Nine2Five
   describe "DSL Examples" do
 
     before { initialize_workflow_map }
-    subject { eval(parent_description(self)) }
+    subject { eval(description(self)) }
 
     it "should allow a simple adder" do
       adder = eval("

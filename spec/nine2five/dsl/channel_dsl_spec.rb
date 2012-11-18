@@ -5,7 +5,7 @@ module Nine2Five
   describe "Channel DSL" do
 
     before { initialize_workflow_map }
-    subject { eval(parent_description(self)) }
+    subject { eval(description(self)) }
 
     describe "channel name: :c, in: 42" do
       its(:name)    { should be :c }
@@ -23,8 +23,9 @@ module Nine2Five
 
     it "should save the channel hashed by its name" do
       c = eval("channel name: :c")
-      channels[:c].should be c
+
       channels.count.should be 1
+      channels[:c].should be c
     end
 
   end

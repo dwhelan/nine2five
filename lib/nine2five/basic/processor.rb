@@ -8,15 +8,16 @@ module Nine2Five
 
       def initialize(*args, &block)
         opts = args.last.is_a?(Hash) ? args.last : {}
-        @in  = opts[:in]
-        @out = opts[:out]
-        super
+        args = super
+        @in  = args.shift || opts[:in]
+        @out = args.shift || opts[:out]
       end
 
       def run
         input =  @in.kind_of?(Array) ? @in.map(&:receive) : @in.receive
         output = @block ? @block.call(input) : input
-        @out << output
+        @out << output if @out
+        output
       end
 
       def inspect

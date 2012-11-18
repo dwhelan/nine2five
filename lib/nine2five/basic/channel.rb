@@ -5,7 +5,7 @@ module Nine2Five
       def initialize(*args, &block)
         opts = args.last.is_a?(Hash) ? args.last : {}
         args = super
-        @initial = opts[:in] || args.shift
+        @initial = args.shift || opts[:in]
         @value = @initial
       end
 

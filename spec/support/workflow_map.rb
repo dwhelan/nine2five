@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-def parent_description(example)
-  example.class.ancestors[1].description
-end
-
 def initialize_workflow_map
    workflow_map.reset
 end

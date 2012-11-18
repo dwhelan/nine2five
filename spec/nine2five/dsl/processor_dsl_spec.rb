@@ -5,31 +5,34 @@ module Nine2Five
   describe "Processor DSL" do
 
     before  { initialize_workflow_map }
-    subject { eval(parent_description(self)) }
+    subject { eval(description(self)) }
 
     describe "processor name: :p" do
       its(:name)  { should be :p }
       its(:class) { should be Basic::Processor }
     end
 
-    describe "p name: :p_should_be_an_alias_for_processor" do
-      its(:name)    { should be :p_should_be_an_alias_for_processor }
+    describe "p name: :p # 'p' should be an alias for 'processor'"
+      its(:name) { should be :p }
     end
 
-    describe "channel name: :a; channel name: :c; processor name: :x, in: :a, out: :c" do
-      its(:in)  { subject.should be channels[:a] }
-      its(:out) { subject.should be channels[:c] }
+    describe "p :p, in: :in, out: :out" do
+      before { eval("c :in; c :out")}
+      its(:name) { should be :p }
+      its(:in)   { should be channels[:in] }
+      its(:out)  { should be channels[:out] }
     end
 
-    describe "channel name: :a; channel name: :b; channel name: :c; processor in: [:a, :b]" do
-      its(:in) { should == [ channels[:a], channels[:b] ] }
+    describe "p in: [:in1, :in2] # input array" do
+      before { eval("c :in1; c :in2")}
+      its(:in) { should == [ channels[:in1], channels[:in2] ] }
     end
-
 
     it "should save the processor hashed by its name" do
       p = eval("processor name: :p")
-      processors[:p].should be p
+
       processors.count.should be 1
+      processors[:p].should be p
     end
   end
 end

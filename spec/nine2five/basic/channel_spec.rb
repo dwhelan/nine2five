@@ -6,60 +6,73 @@ module Nine2Five
 
     describe Channel do
 
-      let(:value) { 'foo'}
+      subject { eval(description(self)) }
 
-      describe "attributes" do
-        let(:block)  { Proc.new { } }
-        subject { Channel.new({name: :c}, &block) }
+      describe "initialization" do
 
-        its(:name)  { should be :c}
-        its(:block) { should be block}
-      end
-
-      describe "with name as first argument" do
-        subject { Channel.new :c }
-
-        its(:name) { should be :c}
-      end
-
-      describe "with value as second argument" do
-        subject { Channel.new :c, 1 }
-
-        its(:receive) { should be 1}
-      end
-
-      describe "without a block" do
-
-        context "with an initial value of 42" do
-          subject { Channel.new(in: 42) }
-          its(:receive) { should be 42 }
+        describe "Channel.new" do
+          its(:name)    { should be nil}
+          its(:receive) { should be nil}
+          its(:block)   { should be nil}
         end
 
-        context "with no initial value" do
+        describe "Channel.new :c" do
+          its(:name) { should be :c}
+        end
+
+        describe "Channel.new name: :c" do
+          its(:name) { should be :c}
+        end
+
+        describe "Channel.new :c1, name: :c2" do
+          its(:name) { should be :c1}
+        end
+
+        describe "Channel.new :c, 0" do
+          its(:receive) { should be 0}
+        end
+
+        describe "Channel.new :c, in: 0" do
+          its(:receive) { should be 0}
+        end
+
+        describe "Channel.new :c, 1, in: 2" do
+          its(:receive) { should be 1}
+        end
+      end
+
+      describe "receive without a block" do
+
+        describe "Channel.new" do
           subject {Channel.new }
           its(:receive) { should be nil }
         end
+
+        describe "Channel.new(in: 42)" do
+          its(:receive) { should be 42 }
+        end
       end
 
-      describe "with a block" do
+      describe "receive with a block" do
 
-        describe "with an initial value of 42 and an identity block" do
-          subject { Channel.new(in: 42) { |x| x } }
+        describe "Channel.new(in: 42) { |x| x }" do
           its(:receive) { should be 42 }
         end
 
-        it "with a block that increments, each receive call should return a value one greater than the last" do
-          factory = Channel.new(in: 0) { |x| x + 1 }
-          factory.receive.should be 1
-          factory.receive.should be 2
-          factory.receive.should be 3
+        describe "Channel.new(in: 0) { |x| x + 1 }" do
+          specify "repeated receives should return: 1, 2, 3" do
+            subject.receive.should be 1
+            subject.receive.should be 2
+            subject.receive.should be 3
+          end
         end
 
-        it "receive should pass initial value to block as second parameter" do
-          factory = Channel.new(in: 1) { |x, initial| x + initial + 1 }
-          factory.receive.should be 3
-          factory.receive.should be 5
-          factory.receive.should be 7
+        describe "Channel.new(in: 1) { |x, initial| x + initial + 1 }" do
+          specify "repeated receives should return: 3, 5, 7" do
+            subject.receive.should be 3
+            subject.receive.should be 5
+            subject.receive.should be 7
+          end
         end
       end
     end

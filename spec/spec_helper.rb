@@ -10,3 +10,16 @@ RSpec.configure do |c|
   c.treat_symbols_as_metadata_keys_with_true_values = true
   c.tty = true # enable color in watchr
 end
+
+class Symbol
+  def method_name?
+    return /[@$"]/ !~ inspect
+  end
+end
+
+def description(example)
+  description = example.class.ancestors[0].description
+  return description unless description.to_sym.method_name?
+
+  example.class.ancestors[1].description
+end
