@@ -7,7 +7,7 @@ module Nine2Five
       attr_reader :in, :out
 
       def initialize(*args, &block)
-        opts = args.last.is_a?(Hash) ? args.clone.pop : {}
+        opts = args.last.is_a?(Hash) ? args.last : {}
         @in  = opts[:in]
         @out = opts[:out]
         super
@@ -18,6 +18,11 @@ module Nine2Five
         output = @block ? @block.call(input) : input
         @out << output
       end
+
+      def inspect
+        "processor :#{@name}"
+      end
+
     end
   end
 end

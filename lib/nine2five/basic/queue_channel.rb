@@ -4,7 +4,7 @@ module Nine2Five
   module Basic
     class QueueChannel < Base
 
-      def initialize(opts={})
+      def initialize(*args)
         @queue = Queue.new
         super
       end

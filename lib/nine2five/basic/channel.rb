@@ -3,7 +3,7 @@ module Nine2Five
     class Channel < Base
 
       def initialize(*args, &block)
-        opts = args.last.is_a?(Hash) ? args.clone.pop : {}
+        opts = args.last.is_a?(Hash) ? args.last : {}
         @initial = opts[:in]
         @value = @initial
         super
@@ -19,7 +19,7 @@ module Nine2Five
       end
 
       def inspect
-        "Channel :#{@name}"
+        "channel :#{@name}"
       end
     end
   end
