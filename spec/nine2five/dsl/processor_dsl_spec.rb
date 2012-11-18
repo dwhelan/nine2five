@@ -12,8 +12,8 @@ module Nine2Five
       its(:class) { should be Basic::Processor }
     end
 
-    describe "p name: :p # 'p' should be an alias for 'processor'"
-      its(:name) { should be :p }
+    describe "p # 'p' should be an alias for 'processor'" do
+      its(:class) { should be Basic::Processor }
     end
 
     describe "p :p, in: :in, out: :out" do
@@ -34,5 +34,10 @@ module Nine2Five
       processors.count.should be 1
       processors[:p].should be p
     end
+
+    it "should handle channels rather than just names of channels"
+
+    it "should handle channels as strings as well as symbols"
+
   end
 end
