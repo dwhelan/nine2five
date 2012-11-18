@@ -8,8 +8,9 @@ module Nine2Five
 
       attr_reader :name, :block
 
-      def initialize(opts, &block)
-        @name = opts[:name]
+      def initialize(*args, &block)
+        opts = args.last.is_a?(Hash) ? args.pop : {}
+        @name = opts[:name] || args.shift
         @block = block
       end
 

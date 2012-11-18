@@ -2,7 +2,8 @@ module Nine2Five
   module Basic
     class Channel < Base
 
-      def initialize(opts={}, &block)
+      def initialize(*args, &block)
+        opts = args.last.is_a?(Hash) ? args.clone.pop : {}
         @initial = opts[:in]
         @value = @initial
         super

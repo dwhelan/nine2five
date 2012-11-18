@@ -6,7 +6,8 @@ module Nine2Five
 
       attr_reader :in, :out, :runner
 
-      def initialize(opts={}, &block)
+      def initialize(*args, &block)
+        opts = args.last.is_a?(Hash) ? args.clone.pop : {}
         @in  = opts[:in]
         @out = opts[:out]
         @runner = opts[:runner]

@@ -1,13 +1,14 @@
 require 'nine2five'
 
-def channel(opts={}, &block)
-  channel = Nine2Five::Basic::Channel.new(opts, &block)
+def channel(*args, &block)
+  channel = Nine2Five::Basic::Channel.new(*args, &block)
   Nine2Five::WorkflowMap.instance.add_channel channel
 end
 
 alias c channel
 
-def processor(opts={}, &block)
+def processor(*args, &block)
+  opts = args.last.is_a?(Hash) ? args.last : {}
   opts.each do |k,v|
     case k
       when :in, :out
@@ -19,7 +20,7 @@ def processor(opts={}, &block)
     end
     opts[k] = v
   end
-  processor = Nine2Five::Basic::Processor.new(opts, &block)
+  processor = Nine2Five::Basic::Processor.new(*args, &block)
   Nine2Five::WorkflowMap.instance.processors[processor.name] = processor
 end
 

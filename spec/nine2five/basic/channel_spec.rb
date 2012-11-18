@@ -10,24 +10,22 @@ module Nine2Five
 
       describe "attributes" do
         let(:block)  { Proc.new { } }
-        subject {Channel.new({name: :c}, &block) }
+        subject { Channel.new({name: :c}, &block) }
 
         its(:name)  { should be :c}
         its(:block) { should be block}
       end
 
-      describe "attributes" do
-        let(:block)  { Proc.new { } }
-        subject {Channel.new({name: :c}, &block) }
+      describe "with name as single argument" do
+        subject { Channel.new :c }
 
         its(:name)  { should be :c}
-        its(:block) { should be block}
       end
 
       describe "without a block" do
 
         context "with an initial value of 42" do
-          subject {Channel.new(in: 42) }
+          subject { Channel.new(in: 42) }
           its(:receive) { should be 42 }
         end
 

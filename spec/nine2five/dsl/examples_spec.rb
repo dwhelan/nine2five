@@ -9,10 +9,10 @@ module Nine2Five
 
     it "should allow a simple adder" do
       eval("
-        channel name: :a, in: 1
-        channel name: :b, in: 2
-        channel name: :c
-        processor(name: :adder, in: [:a, :b], out: :c) {|x| x.inject(:+)}"
+        c :a, in: 1
+        c :b, in: 2
+        c :c
+        p(:adder, in: [:a, :b], out: :c) {|x| x.inject(:+)}"
       )
 
       adder = processors[:adder]

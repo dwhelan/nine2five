@@ -14,11 +14,11 @@ module Nine2Five
     end
 
     describe "channel name: :one; channel name: :two" do
-      its(:name)    { should be :two }
+      its(:name) { should be :two }
     end
 
     describe "c name: :c_should_be_an_alias_for_channel" do
-      its(:name)    { should be :c_should_be_an_alias_for_channel }
+      its(:name) { should be :c_should_be_an_alias_for_channel }
     end
 
     it "should save the channel hashed by its name" do

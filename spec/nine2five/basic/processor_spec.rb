@@ -12,7 +12,7 @@ module Nine2Five
       let(:runner) { Object.new }
 
       describe "attributes" do
-        let(:block)  { Proc.new { } }
+        let(:block)  { Proc.new{} }
 
         subject { Processor.new({name: :p, in: input, out: output, runner: runner}, &block)  }
 
@@ -21,6 +21,12 @@ module Nine2Five
         its(:out)    { should be output}
         its(:runner) { should be runner}
         its(:block)  { should be block}
+      end
+
+      describe "with name as single argument" do
+        subject { Processor.new :p }
+
+        its(:name) { should be :p}
       end
 
       context "running" do
