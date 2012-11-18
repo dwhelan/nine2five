@@ -17,6 +17,10 @@ module Nine2Five
       its(:name)    { should be :two }
     end
 
+    describe "c name: :c_should_be_an_alias_for_channel" do
+      its(:name)    { should be :c_should_be_an_alias_for_channel }
+    end
+
     it "should save the channel hashed by its name" do
       c = eval("channel name: :c")
       channels[:c].should be c

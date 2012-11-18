@@ -16,6 +16,14 @@ module Nine2Five
         its(:block) { should be block}
       end
 
+      describe "attributes" do
+        let(:block)  { Proc.new { } }
+        subject {Channel.new({name: :c}, &block) }
+
+        its(:name)  { should be :c}
+        its(:block) { should be block}
+      end
+
       describe "without a block" do
 
         context "with an initial value of 42" do

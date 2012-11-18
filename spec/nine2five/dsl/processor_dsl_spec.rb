@@ -12,6 +12,10 @@ module Nine2Five
       its(:class) { should be Basic::Processor }
     end
 
+    describe "p name: :p_should_be_an_alias_for_processor" do
+      its(:name)    { should be :p_should_be_an_alias_for_processor }
+    end
+
     describe "channel name: :a; channel name: :c; processor name: :x, in: :a, out: :c" do
       its(:in)  { subject.should be channels[:a] }
       its(:out) { subject.should be channels[:c] }
@@ -20,6 +24,7 @@ module Nine2Five
     describe "channel name: :a; channel name: :b; channel name: :c; processor in: [:a, :b]" do
       its(:in) { should == [ channels[:a], channels[:b] ] }
     end
+
 
     it "should save the processor hashed by its name" do
       p = eval("processor name: :p")

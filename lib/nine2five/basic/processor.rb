@@ -15,14 +15,18 @@ module Nine2Five
 
       def start
         @runner.run do
-          if @in.kind_of?(Array)
-            input = @in.map(&:receive)
-          else
-            input = @in.receive
-          end
-          output = @block ? @block.call(input) : input
-          @out << output
+          run
         end
+      end
+
+      def run
+        if @in.kind_of?(Array)
+          input = @in.map(&:receive)
+        else
+          input = @in.receive
+        end
+        output = @block ? @block.call(input) : input
+        @out << output
       end
     end
   end
