@@ -12,8 +12,8 @@ module Nine2Five
       let(:output2) { "output2" }
 
       before do
-        input.stub(:get).and_return('foo')
-        input2.stub(:get).and_return('bar')
+        input.stub(:>>).and_return('foo')
+        input2.stub(:>>).and_return('bar')
       end
 
       subject { eval(description(self)) }
@@ -51,16 +51,16 @@ module Nine2Five
         end
       end
 
-      describe "get" do
+      describe ">>" do
 
         context "with an input of 'foo'" do
 
           describe "Processor.new :p, input" do
-            its(:get) {should == 'foo'}
+            its(:>>) {should == 'foo'}
           end
 
           describe "Processor.new :p, [input, input2] # should return array with get from each input channel" do
-            its(:get) {should == ['foo', 'bar'] }
+            its(:>>) {should == ['foo', 'bar'] }
           end
 
         end
@@ -82,39 +82,39 @@ module Nine2Five
 
       end
 
-      describe "put" do
+      describe "<<" do
         let(:foo) {''}
 
         describe "Processor.new :p, input # with no output" do
 
-          specify "put should return arg" do
-            subject.put(foo).should be foo
+          specify "<< should return arg" do
+            (subject << (foo)).should be foo
           end
 
-          specify "put should not raise an error" do
-            lambda {subject.put(foo)}.should_not raise_error
+          specify "<< should not raise an error" do
+            lambda {subject << foo}.should_not raise_error
           end
         end
 
         describe "Processor.new :p, input, output # with output" do
-          before { output.should_receive(:put).with(foo) }
-          specify "put should put arg to output" do
-            subject.put(foo)
+          before { output.should_receive(:<<).with(foo) }
+          specify ">> should put arg to output" do
+            subject << foo
           end
         end
 
       end
 
-      describe "Processor.new :p, input, output # with output # process should be get -> transform -> put" do
+      describe "Processor.new :p, input, output # with output # process should be >> transform <<" do
         let(:foo) {''}
         let(:bar) {''}
         let(:baz) {''}
         let(:qux) {''}
 
         before do
-          subject.should_receive(:get).with(no_args).and_return(foo)
+          subject.should_receive(:>>).with(no_args).and_return(foo)
           subject.should_receive(:transform).with(foo).and_return(bar)
-          subject.should_receive(:put).with(bar).and_return(qux)
+          subject.should_receive(:<<).with(bar).and_return(qux)
         end
 
         its(:process) { should be qux }

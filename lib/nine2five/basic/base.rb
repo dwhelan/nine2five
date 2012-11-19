@@ -6,18 +6,31 @@ module Nine2Five
 
     class Base
 
-      attr_reader :name
+      attr_reader :name, :in, :out
 
       def initialize(*args, &block)
-        opts = args.last.is_a?(Hash) ? args.pop : {}
-        @name = args.shift || opts[:name]
-        @in  = args.shift || opts[:in]
+        opts   = args.last.is_a?(Hash) ? args.pop : {}
+        @name  = args.shift || opts[:name]
+        @in    = args.shift || opts[:in]
+        @out   = args.shift || opts[:out]
+        @value = @in
         @block = block
-        args
       end
 
-      def transform(value1, value2=nil)
-        @block ? @block.call(value1, value2) : value1
+      def process
+        @value = self << transform(self.>>)
+      end
+
+      def >>
+        @value
+      end
+
+      def transform input
+        @block ? @block.call(input, @in) : input
+      end
+
+      def << output
+        @output = output
       end
 
     end
