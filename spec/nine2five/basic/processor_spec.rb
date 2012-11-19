@@ -18,17 +18,16 @@ module Nine2Five
         describe "Processor.new({name: :p, in: input, out: output}, &block)" do
           let(:block)  { Proc.new{} }
 
-          its(:name)   { should be :p}
-          its(:in)     { should be input}
-          its(:out)    { should be output}
-          its(:block)  { should be block}
+          its(:name) { should be :p}
+          its(:in)   { should be input}
+          its(:out)  { should be output}
         end
 
         describe "Processor.new :p" do
           its(:name) { should be :p}
         end
 
-        describe "Processor.new :p1, name: :p2" do
+        describe "Processor.new :p1, name: :p2 # positional arg has precedence over named arg" do
           its(:name) { should be :p1}
         end
 
@@ -36,7 +35,7 @@ module Nine2Five
           its(:in) { should be input}
         end
 
-        describe "Processor.new :p, input, input: input2" do
+        describe "Processor.new :p, input, input: input2 # positional arg has precedence over named arg" do
           its(:in) { should be input}
         end
 
@@ -45,7 +44,7 @@ module Nine2Five
           its(:out) { should be output}
         end
 
-        describe "Processor.new :p, input, output, out: output2" do
+        describe "Processor.new :p, input, output, out: output2 # positional arg has precedence over named arg" do
           its(:out) { should be output}
         end
       end

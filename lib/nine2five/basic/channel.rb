@@ -2,11 +2,9 @@ module Nine2Five
   module Basic
     class Channel < Base
 
-      def initialize(*args, &block)
-        opts = args.last.is_a?(Hash) ? args.last : {}
-        args = super
-        @initial = args.shift || opts[:in]
-        @value = @initial
+      def initialize(*args)
+        super
+        @value = @in
       end
 
       def << obj
@@ -14,8 +12,7 @@ module Nine2Five
       end
 
       def get
-        @value = @block.call(@value, @initial) if @block
-        @value
+        @value = @block ? @block.call(@value, @in) : @value
       end
 
       def inspect

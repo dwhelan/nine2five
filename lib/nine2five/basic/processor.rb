@@ -6,10 +6,9 @@ module Nine2Five
 
       attr_reader :in, :out
 
-      def initialize(*args, &block)
+      def initialize(*args)
         opts = args.last.is_a?(Hash) ? args.last : {}
         args = super
-        @in  = args.shift || opts[:in]
         @out = args.shift || opts[:out]
       end
 
