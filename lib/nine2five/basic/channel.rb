@@ -13,10 +13,12 @@ module Nine2Five
         @output = obj
       end
 
-      def receive
+      def get
         @value = @block.call(@value, @initial) if @block
         @value
       end
+
+      alias :receive :get
 
       def inspect
         "channel :#{@name}"

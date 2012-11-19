@@ -14,7 +14,7 @@ module Nine2Five
       end
 
       def run
-        input =  @in.kind_of?(Array) ? @in.map(&:receive) : @in.receive
+        input =  @in.kind_of?(Array) ? @in.map(&:get) : @in.get
         output = @block ? @block.call(input) : input
         @out << output if @out
         output

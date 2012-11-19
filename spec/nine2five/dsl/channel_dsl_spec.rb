@@ -10,7 +10,7 @@ module Nine2Five
     describe "channel name: :c, in: 42" do
       its(:name)    { should be :c }
       its(:class)   { should be Basic::Channel }
-      its(:receive) { should be 42 }
+      its(:get) { should be 42 }
     end
 
     describe "channel name: :one; channel name: :two" do

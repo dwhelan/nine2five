@@ -52,7 +52,7 @@ module Nine2Five
 
       context "with an input of 'foo'" do
 
-        before { input.should_receive(:receive).and_return('foo') }
+        before { input.should_receive(:get).and_return('foo') }
 
         describe "Processor.new :p, input" do
           its(:run) {should == 'foo'}
@@ -65,8 +65,8 @@ module Nine2Five
       end
 
       context "with inputs of ['foo', 'bar']" do
-        before { input.should_receive(:receive).and_return('foo') }
-        before { input2.should_receive(:receive).and_return('bar') }
+        before { input.should_receive(:get).and_return('foo') }
+        before { input2.should_receive(:get).and_return('bar') }
 
         describe "Processor.new :p, [input, input2]" do
           its(:run) {should == ['foo', 'bar'] }

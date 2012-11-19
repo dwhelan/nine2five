@@ -12,7 +12,7 @@ module Nine2Five
 
         describe "Channel.new" do
           its(:name)    { should be nil}
-          its(:receive) { should be nil}
+          its(:get) { should be nil}
           its(:block)   { should be nil}
         end
 
@@ -29,15 +29,15 @@ module Nine2Five
         end
 
         describe "Channel.new :c, 0" do
-          its(:receive) { should be 0}
+          its(:get) { should be 0}
         end
 
         describe "Channel.new :c, in: 0" do
-          its(:receive) { should be 0}
+          its(:get) { should be 0}
         end
 
         describe "Channel.new :c, 1, in: 2" do
-          its(:receive) { should be 1}
+          its(:get) { should be 1}
         end
       end
 
@@ -45,18 +45,18 @@ module Nine2Five
 
         describe "Channel.new" do
           subject {Channel.new }
-          its(:receive) { should be nil }
+          its(:get) { should be nil }
         end
 
         describe "Channel.new(in: 42)" do
-          its(:receive) { should be 42 }
+          its(:get) { should be 42 }
         end
       end
 
       describe "receive with a block" do
 
         describe "Channel.new(in: 42) { |x| x }" do
-          its(:receive) { should be 42 }
+          its(:get) { should be 42 }
         end
 
         describe "Channel.new(in: 0) { |x| x + 1 }" do
