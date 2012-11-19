@@ -16,6 +16,10 @@ module Nine2Five
         args
       end
 
+      def transform(value1, value2=nil)
+        @block ? @block.call(value1, value2) : value1
+      end
+
     end
   end
 end

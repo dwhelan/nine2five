@@ -11,13 +11,16 @@ module Nine2Five
       let(:output)  { "output" }
       let(:output2) { "output2" }
 
+      before do
+        input.stub(:get).and_return('foo')
+        input2.stub(:get).and_return('bar')
+      end
+
       subject { eval(description(self)) }
 
       describe "initialization" do
 
-        describe "Processor.new({name: :p, in: input, out: output}, &block)" do
-          let(:block)  { Proc.new{} }
-
+        describe "Processor.new :p, input, output" do
           its(:name) { should be :p}
           its(:in)   { should be input}
           its(:out)  { should be output}
@@ -27,7 +30,7 @@ module Nine2Five
           its(:name) { should be :p}
         end
 
-        describe "Processor.new :p1, name: :p2 # positional arg has precedence over named arg" do
+        describe "Processor.new :p1, name: :p2 # positional name has precedence over named arg" do
           its(:name) { should be :p1}
         end
 
@@ -35,47 +38,87 @@ module Nine2Five
           its(:in) { should be input}
         end
 
-        describe "Processor.new :p, input, input: input2 # positional arg has precedence over named arg" do
+        describe "Processor.new :p, input, input: input2 # positional input has precedence over named arg" do
           its(:in) { should be input}
         end
 
         describe "Processor.new :p, input, output" do
-          let(:output2) { "output2" }
           its(:out) { should be output}
         end
 
-        describe "Processor.new :p, input, output, out: output2 # positional arg has precedence over named arg" do
+        describe "Processor.new :p, input, output, out: output2 # positional output has precedence over named arg" do
           its(:out) { should be output}
         end
       end
 
-      context "with an input of 'foo'" do
+      describe "get" do
 
-        before { input.should_receive(:get).and_return('foo') }
+        context "with an input of 'foo'" do
 
-        describe "Processor.new :p, input" do
-          its(:run) {should == 'foo'}
+          describe "Processor.new :p, input" do
+            its(:get) {should == 'foo'}
+          end
+
+          describe "Processor.new :p, [input, input2] # should return array with get from each input channel" do
+            its(:get) {should == ['foo', 'bar'] }
+          end
+
+        end
+      end
+
+      describe "transform" do
+
+        describe "Processor.new :p, input # with no block" do
+          it " transform should return value provided" do
+            subject.transform('foo').should == 'foo'
+          end
         end
 
-        describe "Processor.new(:p, input) { |x| x + 'bar' }" do
-          its(:run) {should == 'foobar'}
+        describe "Processor.new(:p, input) { |x| x + 'bar' } # with a block" do
+          it "transform should return value returned from block" do
+            subject.transform('foo').should == 'foobar'
+          end
         end
 
       end
 
-      context "with inputs of ['foo', 'bar']" do
-        before { input.should_receive(:get).and_return('foo') }
-        before { input2.should_receive(:get).and_return('bar') }
+      describe "put" do
+        let(:foo) {''}
 
-        describe "Processor.new :p, [input, input2]" do
-          its(:run) {should == ['foo', 'bar'] }
+        describe "Processor.new :p, input # with no output" do
+
+          specify "put should return arg" do
+            subject.put(foo).should be foo
+          end
+
+          specify "put should not raise an error" do
+            lambda {subject.put(foo)}.should_not raise_error
+          end
         end
 
-        describe "Processor.new(in: [input, input2]) { |x| x.inject(:+) }" do
-          its(:run) {should == 'foobar' }
+        describe "Processor.new :p, input, output # with output" do
+          before { output.should_receive(:put).with(foo) }
+          specify "put should put arg to output" do
+            subject.put(foo)
+          end
         end
+
       end
-      specify "output?"
+
+      describe "Processor.new :p, input, output # with output # process should be get -> transform -> put" do
+        let(:foo) {''}
+        let(:bar) {''}
+        let(:baz) {''}
+        let(:qux) {''}
+
+        before do
+          subject.should_receive(:get).with(no_args).and_return(foo)
+          subject.should_receive(:transform).with(foo).and_return(bar)
+          subject.should_receive(:put).with(bar).and_return(qux)
+        end
+
+        its(:process) { should be qux }
+      end
     end
   end
 end

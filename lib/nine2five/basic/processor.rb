@@ -12,12 +12,21 @@ module Nine2Five
         @out = args.shift || opts[:out]
       end
 
-      def run
-        input =  @in.kind_of?(Array) ? @in.map(&:get) : @in.get
-        output = @block ? @block.call(input) : input
-        @out << output if @out
-        output
+      def process
+        put(transform(get))
       end
+
+      def get
+        @in.kind_of?(Array) ? @in.map(&:get) : @in.get
+      end
+
+      def put(output)
+        @out ? @out.put(output) : output
+      end
+
+      alias :complete :put
+      alias :create :put
+      alias :<< :put
 
       def inspect
         "processor :#{@name}"

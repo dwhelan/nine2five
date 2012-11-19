@@ -15,7 +15,7 @@ module Nine2Five
         p(in: [:a, :b], out: :c) {|x| x.inject(:+)}"
       )
 
-      adder.run.should be 3
+      adder.process.should be 3
     end
   end
 end

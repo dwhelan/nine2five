@@ -7,13 +7,16 @@ module Nine2Five
         @value = @in
       end
 
-      def << obj
+      def get
+        @value = transform(@value, @in)
+        #@value = @block ? @block.call(@value, @in) : @value
+      end
+
+      def put obj
         @output = obj
       end
 
-      def get
-        @value = @block ? @block.call(@value, @in) : @value
-      end
+      alias :<< :put
 
       def inspect
         "channel :#{@name}"

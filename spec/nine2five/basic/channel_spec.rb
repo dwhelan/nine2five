@@ -22,7 +22,7 @@ module Nine2Five
           its(:name) { should be :c}
         end
 
-        describe "Channel.new :c1, name: :c2 # positional arg has precedence over named arg" do
+        describe "Channel.new :c1, name: :c2 # positional name has precedence over named arg" do
           its(:name) { should be :c1}
         end
       end
@@ -41,7 +41,7 @@ module Nine2Five
           its(:get) { should be 42 }
         end
 
-        describe "Channel.new :c, 1, in: 2 # positional arg has precedence over named arg" do
+        describe "Channel.new :c, 1, in: 2 # positional input has precedence over named arg" do
           its(:get) { should be 1 }
         end
 
