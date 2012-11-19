@@ -18,8 +18,6 @@ module Nine2Five
         @value
       end
 
-      alias :receive :get
-
       def inspect
         "channel :#{@name}"
       end

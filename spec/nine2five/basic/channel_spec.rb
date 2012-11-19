@@ -60,18 +60,18 @@ module Nine2Five
         end
 
         describe "Channel.new(in: 0) { |x| x + 1 }" do
-          specify "repeated receives should return: 1, 2, 3" do
-            subject.receive.should be 1
-            subject.receive.should be 2
-            subject.receive.should be 3
+          specify "repeated gets should return: 1, 2, 3" do
+            subject.get.should be 1
+            subject.get.should be 2
+            subject.get.should be 3
           end
         end
 
         describe "Channel.new(in: 1) { |x, initial| x + initial + 1 }" do
-          specify "repeated receives should return: 3, 5, 7" do
-            subject.receive.should be 3
-            subject.receive.should be 5
-            subject.receive.should be 7
+          specify "repeated gets should return: 3, 5, 7" do
+            subject.get.should be 3
+            subject.get.should be 5
+            subject.get.should be 7
           end
         end
       end
