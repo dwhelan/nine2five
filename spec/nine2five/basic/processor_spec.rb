@@ -16,7 +16,7 @@ module Nine2Five
         input2.stub(:>>).and_return('bar')
       end
 
-      subject { eval(description(self)) }
+      subject { eval description }
 
       describe "initialization" do
 

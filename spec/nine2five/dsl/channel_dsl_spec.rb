@@ -5,7 +5,7 @@ module Nine2Five
   describe "Channel DSL" do
 
     before { initialize_workflow_map }
-    subject { eval(description(self)) }
+    subject { eval description }
 
     describe "channel name: :c, in: 42" do
       its(:name)    { should be :c }

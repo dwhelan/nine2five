@@ -6,7 +6,7 @@ module Nine2Five
 
     describe Channel do
 
-      subject { eval(description(self)) }
+      subject { eval description }
 
       describe "initialization" do
 

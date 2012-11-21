@@ -17,9 +17,10 @@ class Symbol
   end
 end
 
-def description(example)
-  description = example.class.ancestors[0].description
+def description
+  description = self.class.ancestors[0].description
   return description unless description.to_sym.method_name?
 
-  example.class.ancestors[1].description
+  self.class.ancestors[1].description
 end
+
