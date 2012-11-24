@@ -15,7 +15,7 @@ def processor(*args, &block)
         if v.kind_of?(Array)
           v = v.map{|name| Nine2Five::WorkflowMap.instance.channels[name]}
         else
-          v = Nine2Five::WorkflowMap.instance.channels[v]
+          v = Nine2Five::WorkflowMap.instance.channels[v.to_sym]
         end
     end
     opts[k] = v

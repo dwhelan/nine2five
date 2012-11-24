@@ -36,9 +36,11 @@ module Nine2Five
       processors[:p].should be p
     end
 
+    describe "p in: 'c' # channels can be referenced as strings" do
+      before { eval("c :c") }
+      its(:in) { should == channels[:c] }
+    end
+
     it "should handle channels rather than just names of channels"
-
-    it "should handle channels as strings as well as symbols"
-
   end
 end

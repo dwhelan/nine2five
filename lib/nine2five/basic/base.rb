@@ -33,6 +33,10 @@ module Nine2Five
         @output = output
       end
 
+      def inspect
+        "#{self.class.name.split('::').last} :#{@name}"
+      end
+
     end
   end
 end
