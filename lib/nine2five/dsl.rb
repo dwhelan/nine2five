@@ -12,18 +12,23 @@ def processor(*args, &block)
   opts.each do |k,v|
     case k
       when :in, :out
-        if v.kind_of?(Nine2Five::Basic::Channel)
-          v = v
-        elsif v.kind_of?(Array)
-          v = v.map{|name| Nine2Five::WorkflowMap.instance.channels[name]}
-        else
-          v = Nine2Five::WorkflowMap.instance.channels[v.to_sym]
-        end
+        opts[k] = parse_channels(v)
     end
-    opts[k] = v
   end
   processor = Nine2Five::Basic::Processor.new(*args, &block)
   Nine2Five::WorkflowMap.instance.processors[processor.name] = processor
 end
 
 alias p processor
+
+private
+
+def parse_channels(channels)
+  case channels
+    when Symbol, String
+      channels = Nine2Five::WorkflowMap.instance.channels[channels.to_sym]
+    when Array
+      channels = channels.map { |channel| parse_channels(channel) }
+  end
+  channels
+end
