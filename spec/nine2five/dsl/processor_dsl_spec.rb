@@ -24,9 +24,24 @@ module Nine2Five
       its(:out)  { should be channels[:out] }
     end
 
-    describe "p in: [:in1, :in2] # input array" do
+    describe "p in: 'c' # channel can be referenced as strings" do
+      before { eval("c :c") }
+      its(:in) { should == channels[:c] }
+    end
+
+    describe "ch = c :c; p in: ch # channels can be referenced explicitly" do
+      its(:in) { should == channels[:c] }
+    end
+
+    describe "p in: [:in1, :in2] # input array as symbols" do
       before { eval("c :in1; c :in2") }
       its(:in) { should == [ channels[:in1], channels[:in2] ] }
+    end
+
+    describe "p in: ['in1', 'in2'] # input array as strings" do
+      pending "getting arrays working better"
+      before { eval("c :in1; c :in2") }
+      # its(:in) { should == [ channels[:in1], channels[:in2] ] }
     end
 
     it "should save the processor hashed by its name" do
@@ -35,12 +50,5 @@ module Nine2Five
       processors.count.should be 1
       processors[:p].should be p
     end
-
-    describe "p in: 'c' # channels can be referenced as strings" do
-      before { eval("c :c") }
-      its(:in) { should == channels[:c] }
-    end
-
-    it "should handle channels rather than just names of channels"
   end
 end

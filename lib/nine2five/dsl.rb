@@ -12,7 +12,9 @@ def processor(*args, &block)
   opts.each do |k,v|
     case k
       when :in, :out
-        if v.kind_of?(Array)
+        if v.kind_of?(Nine2Five::Basic::Channel)
+          v = v
+        elsif v.kind_of?(Array)
           v = v.map{|name| Nine2Five::WorkflowMap.instance.channels[name]}
         else
           v = Nine2Five::WorkflowMap.instance.channels[v.to_sym]
