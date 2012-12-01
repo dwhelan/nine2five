@@ -5,17 +5,28 @@ module Nine2Five
   describe "DSL Examples" do
 
     before { initialize_workflow_map }
-    subject { eval(description(self)) }
 
-    it "should allow a simple adder" do
+    it "should enable a simple adder" do
       adder = eval("
-        c :a, 1
-        c :b, 2
-        c :c
-        p(in: [:a, :b], out: :c) {|x| x.inject(:+)}"
+        a = c :a, 1
+        b = c :b, 2
+        sum = c :c
+        p(:p, [a, b], sum) {|x| x.inject(:+)}"
       )
 
       adder.process.should be 3
     end
+
+    it "should enable a simple adder" do
+      pending 'blah'
+      adder = eval("
+        p(:p, [1, 2]) {|x| x.inject(:+)}"
+      )
+
+      adder.process.should be 3
+    end
+
+
+
   end
 end

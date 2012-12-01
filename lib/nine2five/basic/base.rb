@@ -22,7 +22,15 @@ module Nine2Five
       end
 
       def >>
-        @value
+        if @value.is_a? Fixnum
+          @value
+        elsif @value && @value.respond_to?(:>>)
+          @value.>>
+        elsif @value.is_a? Array
+          @value.shift
+        else
+          @value
+        end
       end
 
       def transform input
@@ -30,7 +38,13 @@ module Nine2Five
       end
 
       def << output
-        @output = output
+        if @output.is_a? Fixnum
+          @output = output
+        elsif @output && @output.respond_to?(:<<)
+          @output =  @output.<< output
+        else
+          @output = output
+        end
       end
 
       def inspect

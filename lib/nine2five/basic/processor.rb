@@ -8,13 +8,13 @@ module Nine2Five
         @in.kind_of?(Array) ? @in.map(&:>>) : @in.>>
       end
 
-      def << output
-        @out ? @out << output : output
-      end
-
-      def inspect
-        "processor :#{@name}"
-      end
+      #def << output
+      #  @out ? @out << output : output
+      #end
+      #
+      #def inspect
+      #  "processor :#{@name}"
+      #end
 
     end
   end

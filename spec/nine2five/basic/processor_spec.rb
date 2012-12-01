@@ -51,21 +51,6 @@ module Nine2Five
         end
       end
 
-      describe ">>" do
-
-        context "with an input of 'foo'" do
-
-          describe "Processor.new :p, input" do
-            its(:>>) {should == 'foo'}
-          end
-
-          describe "Processor.new :p, [input, input2] # should return array with get from each input channel" do
-            its(:>>) {should == ['foo', 'bar'] }
-          end
-
-        end
-      end
-
       describe "transform" do
 
         describe "Processor.new :p, input # with no block" do
@@ -96,8 +81,8 @@ module Nine2Five
           end
         end
 
+        let(:output) { [] }
         describe "Processor.new :p, input, output # with output" do
-          before { output.should_receive(:<<).with(foo) }
           specify ">> should put arg to output" do
             subject << foo
           end
